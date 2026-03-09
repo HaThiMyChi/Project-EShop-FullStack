@@ -1,0 +1,16 @@
+{
+  "name": "fullstack",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Hướng dẫn xây dựng website bán hàng trực tuyến đơn giản sử dụng NodeJS, Express, Postgres",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
