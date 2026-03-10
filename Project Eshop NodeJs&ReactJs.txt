@@ -56,4 +56,11 @@ quản lý version schema
 nó chỉ liên kết trong vùng nhớ mà pnpm nó đã cài sẵn
 
 
+So sánh ngắn: Express, Handlerbars
+
+Express: xử lý route, request, response
+
+Handlebars: render HTML động
+
+Express Handlebars: tích hợp Handlebars vào Express
 
