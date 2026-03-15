@@ -1,5 +1,7 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict';
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Tag extends Model {
     /**
@@ -9,23 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // 1tag thì có nhiều sản phẩm có mối quan hệ nhiều nhiều
-      // through là nó qua bảng trung gian là ProductTag để liên kết với bảng Product
-      Tag.belongsToMany(models.Product, {
-        through: "ProductTag",
-        foreignKey: "tagId",
-        otherKey: "productId",
-      });
+      Tag.belongsToMany(models.Product, { through: 'ProductTag', foreignKey: 'tagId', otherKey: 'productId' })
     }
   }
-  Tag.init(
-    {
-      name: DataTypes.STRING,
-    },
-    {
-      sequelize,
-      modelName: "Tag",
-    },
-  );
+  Tag.init({
+    name: DataTypes.STRING
+  }, {
+    sequelize,
+    modelName: 'Tag',
+  });
   return Tag;
 };
