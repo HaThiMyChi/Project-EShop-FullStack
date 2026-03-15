@@ -14,6 +14,13 @@ module.exports = (sequelize, DataTypes) => {
 
       // một sản phẩm phải thuộc về một nhãn hàng nào đó
       Product.belongsTo(models.Brand, { foreignKey: "brandId" });
+
+      // một sản phẩm thuộc về nhiều tag
+      Product.belongsToMany(models.Tag, {
+        through: "ProductTag",
+        foreignKey: "productId",
+        otherKey: "tagId",
+      });
     }
   }
   Product.init(

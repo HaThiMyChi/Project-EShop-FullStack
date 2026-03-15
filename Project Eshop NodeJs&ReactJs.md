@@ -105,3 +105,5 @@ Express Handlebars: tích hợp Handlebars vào Express
 Note: Khi tạo tên bảng không thêm "s" như trong CSDL
 
 sequelize model:create --name Product --attributes name:string,imagePath:string
+
+# Trong database có mối quan hệ nhiều nhiều, nó sẽ phát sinh ra thêm 1 bảng để chứa khóa ngoại 2 bảng, ví dụ như bảng tab và product. Nó phát sinh ra bảng productTab chứa khóa ngoại, thì sẽ có 3 models trong csdl
