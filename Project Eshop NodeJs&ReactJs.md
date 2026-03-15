@@ -99,3 +99,9 @@ Express: xử lý route, request, response
 Handlebars: render HTML động
 
 Express Handlebars: tích hợp Handlebars vào Express
+
+# Tạo bảng dữ liệu thì chỉ cần tạo vài trường thôi, xong rồi vào code làm tiếp. Nó sẽ tạo ra 2 file trong models và migrations
+
+Note: Khi tạo tên bảng không thêm "s" như trong CSDL
+
+sequelize model:create --name Product --attributes name:string,imagePath:string

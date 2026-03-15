@@ -9,6 +9,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      // 1 sản phẩm có nhiều image
+      Product.hasMany(models.Image, { foreignKey: "productId" });
+
+      // một sản phẩm phải thuộc về một nhãn hàng nào đó
+      Product.belongsTo(models.Brand, { foreignKey: "brandId" });
     }
   }
   Product.init(
