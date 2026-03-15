@@ -22,6 +22,13 @@ app.engine(
 app.set("view engine", "hbs");
 
 // routes
+app.get("/createTables", (req, res) => {
+  let models = require("./models");
+  models.sequelize.sync().then(() => {
+    res.send("Tables created successfully!");
+  });
+});
+
 app.get("/", (req, res) => {
   res.render("index"); // nó lây nội dung trong file index.hbs này đổ vào trang layout.hbs
 });
