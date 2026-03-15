@@ -107,3 +107,11 @@ Note: Khi tạo tên bảng không thêm "s" như trong CSDL
 sequelize model:create --name Product --attributes name:string,imagePath:string
 
 # Trong database có mối quan hệ nhiều nhiều, nó sẽ phát sinh ra thêm 1 bảng để chứa khóa ngoại 2 bảng, ví dụ như bảng tab và product. Nó phát sinh ra bảng productTab chứa khóa ngoại, thì sẽ có 3 models trong csdl
+
+# Tạo mẫu dữ liệu trong seeders thì theo câu lệnh, có thể dùng https://www.mockaroo.com/ để generate data cho nhanh
+
+sequelize seed:generate --name Brand
+và chỉnh code sau đó chạy tiếp câu lệnh, để nó thực thi code
+-> sequelize db:seed:all
+
+---Lưu ý: Bảng nào có khóa ngoại thì bắt buộc phải tạo sau bảng chính, tạo generate data phải chú ý
