@@ -115,3 +115,16 @@ và chỉnh code sau đó chạy tiếp câu lệnh, để nó thực thi code
 -> sequelize db:seed:all
 
 ---Lưu ý: Bảng nào có khóa ngoại thì bắt buộc phải tạo sau bảng chính, tạo generate data phải chú ý
+
+# Lý thuyết hiểu về next() xử lý trong node
+
+Khi next() được gọi trong indexController.js, yêu cầu sẽ được chuyển tiếp đến middleware hoặc route tiếp theo trong indexRouter.
+Nếu không có route nào trong indexRouter khớp, yêu cầu sẽ được chuyển đến middleware xử lý lỗi 404.
+Nếu có lỗi xảy ra, middleware xử lý lỗi 500 sẽ được gọi.
+
+4. Khi nào next() dẫn đến lỗi 404 hoặc 500:
+   Lỗi 404:
+   Nếu next() được gọi trong indexController.js mà không có tham số, và không có middleware hoặc route nào khớp với yêu cầu, middleware xử lý lỗi 404 sẽ được kích hoạt.
+
+Lỗi 500:
+Nếu next(error) được gọi (với error là một đối tượng lỗi), middleware xử lý lỗi 500 sẽ được kích hoạt.
