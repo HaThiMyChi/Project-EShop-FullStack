@@ -4,11 +4,24 @@ const controller = {};
 const models = require("../models");
 
 controller.showHomepage = async (req, res) => {
+  const categories = await models.Category.findAll();
+  console.log("categoryArray1111===", categories);
+
+  // Chuyển đổi các đối tượng Sequelize thành JSON đơn giản
+  const plainCategories = categories.map((category) =>
+    category.get({ plain: true }),
+  );
+
+  // Tách mảng thành các nhóm
+  const secondArray = plainCategories.splice(2, 2);
+  const thirdArray = plainCategories.splice(1, 1);
+
+  res.locals.categoryArray = [plainCategories, secondArray, thirdArray];
+
   const Brand = models.Brand;
   const brands = await Brand.findAll();
-  console.log("brands===", brands);
 
-  res.render("index", { brands }); // nếu object có key và value giống nhau thì có thể viết tắt thành 1 từ { brands: brands }
+  res.render("index", { brands });
 };
 
 controller.showPage = (req, res, next) => {

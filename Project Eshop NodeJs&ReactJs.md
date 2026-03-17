@@ -128,3 +128,76 @@ Nếu có lỗi xảy ra, middleware xử lý lỗi 500 sẽ được gọi.
 
 Lỗi 500:
 Nếu next(error) được gọi (với error là một đối tượng lỗi), middleware xử lý lỗi 500 sẽ được kích hoạt.
+
+## Phân biệt slice và splice trong array
+
+1. slice()
+
+Dùng để cắt ra một phần của mảng.
+
+Không làm thay đổi mảng gốc
+
+Trả về mảng mới
+
+Cú pháp
+array.slice(start, end)
+
+start: vị trí bắt đầu
+
+end: vị trí kết thúc, không lấy end
+
+Ví dụ
+const arr = [10, 20, 30, 40, 50];
+
+const result = arr.slice(1, 4);
+
+console.log(result); // [20, 30, 40]
+console.log(arr); // [10, 20, 30, 40, 50]
+
+2. splice()
+
+Dùng để thêm, xóa, hoặc thay thế phần tử trong mảng.
+
+Có làm thay đổi mảng gốc
+
+Trả về mảng chứa phần tử bị xóa
+
+Cú pháp
+array.splice(start, deleteCount, item1, item2, ...)
+
+start: vị trí bắt đầu
+
+deleteCount: số phần tử muốn xóa
+
+item1, item2...: phần tử mới muốn thêm vào
+
+Ví dụ 1: xóa phần tử
+const arr = [10, 20, 30, 40, 50];
+
+const result = arr.splice(1, 2);
+
+console.log(result); // [20, 30]
+console.log(arr); // [10, 40, 50]
+Ví dụ 2: thêm phần tử
+const arr = [10, 20, 30];
+
+arr.splice(1, 0, 99);
+
+console.log(arr); // [10, 99, 20, 30]
+Ví dụ 3: thay thế phần tử
+const arr = [10, 20, 30];
+
+arr.splice(1, 1, 99);
+
+console.log(arr); // [10, 99, 30]
+Nhớ nhanh
+
+slice = copy/cắt ra → không đổi mảng gốc
+
+splice = chèn/xóa/sửa → có đổi mảng gốc
+
+Mẹo nhớ
+
+slice gần giống “cắt lát” → lấy ra một phần
+
+splice gần giống “phẫu thuật/chỉnh sửa” → can thiệp trực tiếp vào mảng
