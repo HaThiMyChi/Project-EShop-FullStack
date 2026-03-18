@@ -201,3 +201,7 @@ Mẹo nhớ
 slice gần giống “cắt lát” → lấy ra một phần
 
 splice gần giống “phẫu thuật/chỉnh sửa” → can thiệp trực tiếp vào mảng
+
+# Nếu muốn chạy sequelize cụ thể 1 file nào thì chỉ cần lệnh như này
+
+sequelize db:seed --seed 9-Star.js

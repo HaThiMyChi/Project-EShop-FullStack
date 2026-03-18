@@ -4,6 +4,15 @@ const controller = {};
 const models = require("../models");
 
 controller.showHomepage = async (req, res) => {
+  // Products
+  const featuredProducts = await models.Product.findAll({
+    attributes: ["id", "name", "imagePath", "stars", "price", "oldPrice"], // Chỉ lấy các thuộc tính cụ thể
+    order: [["stars", "DESC"]], // Sắp xếp theo starts giảm dần
+    limit: 10,
+  });
+  res.locals.featuredProducts = featuredProducts;
+
+  /** Category */
   const categories = await models.Category.findAll();
   console.log("categoryArray1111===", categories);
 
@@ -18,6 +27,7 @@ controller.showHomepage = async (req, res) => {
 
   res.locals.categoryArray = [plainCategories, secondArray, thirdArray];
 
+  // Brand
   const Brand = models.Brand;
   const brands = await Brand.findAll();
 
