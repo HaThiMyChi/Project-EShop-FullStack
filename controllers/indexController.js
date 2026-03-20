@@ -51,6 +51,7 @@ controller.showHomepage = async (req, res) => {
 };
 
 controller.showPage = (req, res, next) => {
+  console.log("teeeedddd", req.params.page);
   const pages = [
     "cart",
     "checkout",
