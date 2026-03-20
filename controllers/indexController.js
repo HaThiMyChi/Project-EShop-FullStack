@@ -1,9 +1,25 @@
 "use strict";
 
 const controller = {};
+const { or } = require("sequelize");
 const models = require("../models");
 
 controller.showHomepage = async (req, res) => {
+  const recentProducts = await models.Product.findAll({
+    attributes: [
+      "id",
+      "name",
+      "imagePath",
+      "stars",
+      "price",
+      "oldPrice",
+      "createdAt",
+    ], // Chỉ lấy các thuộc tính cụ thể
+    order: [["createdAt", "DESC"]], // Sắp xếp theo createdAt giảm dần
+    limit: 10,
+  });
+  res.locals.recentProducts = recentProducts;
+
   // Products
   const featuredProducts = await models.Product.findAll({
     attributes: ["id", "name", "imagePath", "stars", "price", "oldPrice"], // Chỉ lấy các thuộc tính cụ thể
