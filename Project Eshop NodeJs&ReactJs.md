@@ -205,3 +205,23 @@ splice gần giống “phẫu thuật/chỉnh sửa” → can thiệp trực t
 # Nếu muốn chạy sequelize cụ thể 1 file nào thì chỉ cần lệnh như này
 
 sequelize db:seed --seed 9-Star.js
+
+# hiểu về include trong models truy vấn lấy tất cả dữ liệu trong bảng
+
+include: [{ model: models.Product }]
+
+Đây là phần quan trọng bạn đang hỏi.
+
+include dùng để làm gì?
+
+include trong Sequelize dùng để join bảng liên quan.
+
+Nó giống như:
+
+SQL JOIN hoặc lấy dữ liệu của bảng có quan hệ với nhau
+
+Ở đây:
+
+include: [{ model: models.Product }] nghĩa là:
+
+Khi lấy Category, lấy luôn các Product thuộc category đó.
