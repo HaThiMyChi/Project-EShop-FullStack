@@ -225,3 +225,49 @@ SQL JOIN hoặc lấy dữ liệu của bảng có quan hệ với nhau
 include: [{ model: models.Product }] nghĩa là:
 
 Khi lấy Category, lấy luôn các Product thuộc category đó.
+
+## Phân biệt each, with trong template engineer handlebars
+
+############ with
+Dùng cho 1 object
+
+{{#with user}}
+{{name}}
+{{/with}}
+
+Example để hiểu
+Tác dụng
+
+Khi vào trong {{#with user}}, Handlebars hiểu rằng:
+
+name = user.name
+age = user.age
+email = user.email
+
+########### each
+Dùng cho mảng / danh sách
+
+{{#each products}}
+
+  <p>{{name}}</p>
+{{/each}}
+
+### Phân biệt findByPk, findOne
+
+1. findByPk
+   chỉ tìm theo khóa chính
+   viết ngắn hơn
+   rất tiện khi tìm theo id
+
+   Example: Product.findByPk(1);
+
+2. findOne
+   tìm theo bất kỳ điều kiện nào
+   linh hoạt hơn
+   có thể tìm theo email, name, categoryId, ...
+   nếu có nhiều record thỏa mãn, nó chỉ lấy 1 cái đầu tiên
+   còn không có nó trả về null
+
+   Example: Product.findOne({
+   where: { categoryId: 2 },
+   });

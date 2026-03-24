@@ -1,18 +1,7 @@
 let controller = {};
 const models = require("../models");
 
-controller.show = async (req, res) => {
-  // console.log("req.originalUrl =", req.originalUrl);
-  // console.log("req.url =", req.url);
-  // console.log("req.query =", req.query);
-  // console.log("req.query.category =", req.query.category);
-
-  // Dung isNaN co phai la so hay khong, neu khong phai so thi tra ve 0, neu la so thi tra ve so do
-
-  let category = isNaN(req.query.category) ? 0 : parseInt(req.query.category);
-  let brand = isNaN(req.query.brand) ? 0 : parseInt(req.query.brand);
-  let tag = isNaN(req.query.tag) ? 0 : parseInt(req.query.tag);
-
+controller.getData = async (req, res, next) => {
   let categories = await models.Category.findAll({
     include: [{ model: models.Product }], // muốn lấy thêm 1 categories có những sản phẩm nào, vì trong bảng product có khóa ngoại categoryId nên có thể lấy được những sản phẩm nào thuộc về category đó, nếu không có thì sẽ không lấy được
   });
@@ -26,6 +15,21 @@ controller.show = async (req, res) => {
 
   let tags = await models.Tag.findAll();
   res.locals.tags = tags;
+
+  next(); // lệnh next() này sẽ chuyển sang controller tiếp theo để xử lý, nếu không có lệnh next() này thì sẽ không chuyển sang controller tiếp theo được, mà sẽ dừng lại ở controller này và trả về kết quả cho client luôn
+};
+
+controller.show = async (req, res) => {
+  // console.log("req.originalUrl =", req.originalUrl);
+  // console.log("req.url =", req.url);
+  // console.log("req.query =", req.query);
+  // console.log("req.query.category =", req.query.category);
+
+  // Dung isNaN co phai la so hay khong, neu khong phai so thi tra ve 0, neu la so thi tra ve so do
+
+  let category = isNaN(req.query.category) ? 0 : parseInt(req.query.category);
+  let brand = isNaN(req.query.brand) ? 0 : parseInt(req.query.brand);
+  let tag = isNaN(req.query.tag) ? 0 : parseInt(req.query.tag);
 
   let options = {
     attributes: ["id", "name", "imagePath", "stars", "price", "oldPrice"],
@@ -53,6 +57,40 @@ controller.show = async (req, res) => {
 
   res.locals.products = products;
   res.render("product-list");
+};
+
+controller.showDetail = async (req, res) => {
+  let id = isNaN(req.params.id) ? 0 : parseInt(req.params.id);
+
+  // chỉ lấy ra 1 sản phẩm thì dùng findByPk
+  // let product = await models.Product.findByPk(id);
+
+  let product = await models.Product.findOne({
+    attributes: [
+      "id",
+      "name",
+      "stars",
+      "price",
+      "oldPrice",
+      "summary",
+      "specification",
+      "description",
+    ],
+    where: { id: id }, //co the viet {id}
+    include: [
+      { model: models.Image, attributes: ["name", "imagePath"] },
+      {
+        model: models.Review,
+        attributes: ["id", "review", "stars", "createdAt"],
+        include: [
+          { model: models.User, attributes: ["firstName", "lastName"] },
+        ],
+      },
+    ],
+  });
+
+  res.locals.product = product;
+  res.render("product-detail");
 };
 
 module.exports = controller;
