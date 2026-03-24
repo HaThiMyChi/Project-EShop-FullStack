@@ -1,5 +1,7 @@
 let controller = {};
 const models = require("../models");
+const sequelize = require("sequelize");
+const Op = sequelize.Op;
 
 controller.getData = async (req, res, next) => {
   let categories = await models.Category.findAll({
@@ -31,6 +33,8 @@ controller.show = async (req, res) => {
   let brand = isNaN(req.query.brand) ? 0 : parseInt(req.query.brand);
   let tag = isNaN(req.query.tag) ? 0 : parseInt(req.query.tag);
 
+  let keyword = req.query.keyword || "";
+
   let options = {
     attributes: ["id", "name", "imagePath", "stars", "price", "oldPrice"],
     where: {},
@@ -52,6 +56,12 @@ controller.show = async (req, res) => {
       },
     ];
   }
+
+  if (keyword.trim() != "") {
+    options.where.name = { [Op.iLike]: `%${keyword}%` }; // lấy ra những sản phẩm nào có tên chứa chuỗi keyword người dùng nhập vào, % là ký tự đại diện cho bất kỳ chuỗi nào, nếu muốn tìm kiếm chính xác thì không cần dùng % mà chỉ cần gán giá trị keyword vào name thôi
+  }
+  // Dấu % nó giống như trong SQL
+  // select * from products where name like '%keyword%' => lấy ra những sản phẩm nào có tên chứa chuỗi keyword, nếu muốn tìm kiếm chính xác thì chỉ cần gán giá trị keyword vào name thôi, không cần dùng % nữa
 
   let products = await models.Product.findAll(options);
 

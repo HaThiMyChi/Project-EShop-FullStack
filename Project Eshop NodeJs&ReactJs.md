@@ -271,3 +271,13 @@ Dùng cho mảng / danh sách
    Example: Product.findOne({
    where: { categoryId: 2 },
    });
+
+## Phân biệt Op.like và Op.iLike khi nào dùng trong Sequelize
+
+Dùng Op.like khi:
+bạn muốn search thông thường
+database của bạn không phải PostgreSQL
+hoặc bạn chấp nhận behavior theo collation của DB
+Dùng Op.iLike khi:
+bạn dùng PostgreSQL
+muốn user gõ iphone, IPHONE, iPhone đều ra kết quả giống nhau
