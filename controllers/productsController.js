@@ -34,6 +34,9 @@ controller.show = async (req, res) => {
   let tag = isNaN(req.query.tag) ? 0 : parseInt(req.query.tag);
 
   let keyword = req.query.keyword || "";
+  let sort = ["price", "newest", "popular"].includes(req.query.sort)
+    ? req.query.sort
+    : "price";
 
   let options = {
     attributes: ["id", "name", "imagePath", "stars", "price", "oldPrice"],
@@ -62,6 +65,26 @@ controller.show = async (req, res) => {
   }
   // Dấu % nó giống như trong SQL
   // select * from products where name like '%keyword%' => lấy ra những sản phẩm nào có tên chứa chuỗi keyword, nếu muốn tìm kiếm chính xác thì chỉ cần gán giá trị keyword vào name thôi, không cần dùng % nữa
+
+  // chuc nang sort
+  switch (sort) {
+    case "newest":
+      options.order = [["createdAt", "DESC"]];
+      break;
+    case "popular":
+      options.order = [["stars", "DESC"]]; // từ cao đến thấp
+      break;
+    default:
+      options.order = [["price", "ASC"]]; // thấp đến cao
+  }
+
+  console.log("originalUrl", req.originalUrl);
+  // res.locals.originalUrl = req.originalUrl;
+  res.locals.sort = sort;
+  // tạo các link sort sạch, không bị lặp sort
+  res.locals.sortPriceUrl = buildUrl(req.originalUrl, "sort", "price");
+  res.locals.sortNewestUrl = buildUrl(req.originalUrl, "sort", "newest");
+  res.locals.sortPopularUrl = buildUrl(req.originalUrl, "sort", "popular");
 
   let products = await models.Product.findAll(options);
 
@@ -102,6 +125,14 @@ controller.showDetail = async (req, res) => {
   res.locals.product = product;
   res.render("product-detail");
 };
+
+function buildUrl(originalUrl, key, value) {
+  const [path, queryString = ""] = originalUrl.split("?");
+  const params = new URLSearchParams(queryString);
+
+  params.set(key, value); // thay thế giá trị cũ, không bị duplicate
+  return `${path}?${params.toString()}`;
+}
 
 module.exports = controller;
 

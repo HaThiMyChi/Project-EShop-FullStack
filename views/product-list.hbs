@@ -33,10 +33,11 @@
                       href="#"
                       class="dropdown-toggle"
                       data-toggle="dropdown"
-                    >Product short by</a>
+                    >Product short by {{sort}}</a>
                     <div class="dropdown-menu dropdown-menu-right">
-                      <a href="#" class="dropdown-item">Newest</a>
-                      <a href="#" class="dropdown-item">Popular</a>
+                      <a href="{{sortPriceUrl}}" class="dropdown-item">Price</a>
+                      <a href="{{sortNewestUrl}}" class="dropdown-item">Newest</a>
+                      <a href="{{sortPopularUrl}}" class="dropdown-item">Popular</a>
                     </div>
                   </div>
                 </div>
