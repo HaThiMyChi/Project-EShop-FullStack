@@ -38,6 +38,9 @@ controller.show = async (req, res) => {
     ? req.query.sort
     : "price";
 
+  // chuc nang phan trang
+  let page = isNaN(req.query.page) ? 1 : parseInt(req.query.page);
+
   let options = {
     attributes: ["id", "name", "imagePath", "stars", "price", "oldPrice"],
     where: {},
@@ -86,9 +89,31 @@ controller.show = async (req, res) => {
   res.locals.sortNewestUrl = buildUrl(req.originalUrl, "sort", "newest");
   res.locals.sortPopularUrl = buildUrl(req.originalUrl, "sort", "popular");
 
-  let products = await models.Product.findAll(options);
+  // chuc nang phan trang
+  const limit = 6;
+  // 0 -> 5, 6 -> 11,...
+  options.limit = limit;
+  options.offset = (page - 1) * limit;
 
-  res.locals.products = products;
+  // tinh toang cho phan totalRowns de biet duoc co bao nhieu trang
+  // vì hàm findAndCountAll nó sẽ trả về một object có 2 thuộc tính là rows và count, trong đó rows là mảng các sản phẩm được lấy ra theo điều kiện trong options, còn count là tổng số
+  let { rows, count } = await models.Product.findAndCountAll(options);
+
+  console.log("count =", count);
+  console.log("rows =", rows);
+
+  res.locals.pagination = {
+    page: page,
+    limit: limit,
+    totalRows: count,
+    queryParams: { ...req.query },
+  };
+  // End chuc nang phan trang, boi vi cho product la no truy van data duoi database roi
+
+  // let products = await models.Product.findAll(options); // làm thêm chức năng phân trang thì mới thay chỗ này, còn các chức năng khác vẫn giữ nguyen
+  // res.locals.products = products;
+
+  res.locals.products = rows;
   res.render("product-list");
 };
 
