@@ -144,10 +144,34 @@ controller.showDetail = async (req, res) => {
           { model: models.User, attributes: ["firstName", "lastName"] },
         ],
       },
+      {
+        model: models.Tag,
+        attributes: ["id"],
+      },
     ],
   });
 
   res.locals.product = product;
+
+  let tagIds = [];
+  product.Tags.forEach((tag) => tagIds.push(tag.id));
+
+  let relatedProducts = await models.Product.findAll({
+    attributes: ["id", "name", "imagePath", "oldPrice", "price"],
+    include: [
+      {
+        model: models.Tag,
+        attributes: ["id"],
+        where: {
+          id: { [Op.in]: tagIds }, // lấy ra những sản phẩm nào có id trong mảng tagIds, tức là những sản phẩm nào có tag giống với sản phẩm đang xem chi tiết}
+        },
+        limit: 10,
+      },
+    ],
+  });
+
+  res.locals.relatedProducts = relatedProducts;
+
   res.render("product-detail");
 };
 
