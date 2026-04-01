@@ -165,9 +165,9 @@ controller.showDetail = async (req, res) => {
         where: {
           id: { [Op.in]: tagIds }, // lấy ra những sản phẩm nào có id trong mảng tagIds, tức là những sản phẩm nào có tag giống với sản phẩm đang xem chi tiết}
         },
-        limit: 10,
       },
     ],
+    limit: 10,
   });
 
   res.locals.relatedProducts = relatedProducts;

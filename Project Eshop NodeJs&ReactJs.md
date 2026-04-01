@@ -281,3 +281,19 @@ hoặc bạn chấp nhận behavior theo collation của DB
 Dùng Op.iLike khi:
 bạn dùng PostgreSQL
 muốn user gõ iphone, IPHONE, iPhone đều ra kết quả giống nhau
+
+#### Giải thích chức năng Cart
+
+1. Sự khác biệt giữa Middleware này và Controller
+   Middleware (trong index.js): Nó chạy trong mọi request (bất kể khách xem trang chủ, xem chi tiết, hay thêm giỏ hàng). Nhiệm vụ của nó là "chuẩn bị" sẵn cái giỏ hàng.
+   Controller (cartController.add): Chỉ chạy khi khách nhấn nút "Add to Cart" (gửi POST request). Nhiệm vụ của nó là thực hiện hành động thêm.
+2. Luồng chạy chi tiết (The Logic Flow)
+   Khi khách hàng truy cập vào website của bạn, các bước sau sẽ xảy ra:
+
+Giai đoạn Session nạp dữ liệu: express-session nhìn vào Cookie của trình duyệt, tìm trong Server xem dữ liệu của ông khách này là gì, rồi gán vào req.session. Lúc này req.session.cart chỉ là một đối tượng JSON thô (không có các hàm như .add(), .quantity).
+Giai đoạn "Hồi sinh" đối tượng (Rehydration): Middleware của bạn chạy:
+Nó lấy dữ liệu thô từ req.session.cart.
+Nó gọi new Cart(dữ liệu thô). Class Cart sẽ biến các dữ liệu thô đó thành một đối tượng thực thụ có đầy đủ các phương thức logic.
+Nó ghi đè lại: req.session.cart = new Cart(...). Bây giờ req.session.cart đã có thể gọi được lệnh .add().
+Giai đoạn hiển thị: Nó tính toán req.session.cart.quantity và gán vào res.locals.quantity để Header của trang web luôn hiện đúng số lượng sản phẩm.
+Giai đoạn Hành động (Nếu là POST /cart): Khi khách nhấn thêm hàng, cartController.add được gọi. Lúc này, nhờ Middleware trên đã chạy trước đó, nó chỉ việc gọi req.session.cart.add(product, quantity) một cách dễ dàng.
