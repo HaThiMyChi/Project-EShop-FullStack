@@ -297,3 +297,8 @@ Nó gọi new Cart(dữ liệu thô). Class Cart sẽ biến các dữ liệu th
 Nó ghi đè lại: req.session.cart = new Cart(...). Bây giờ req.session.cart đã có thể gọi được lệnh .add().
 Giai đoạn hiển thị: Nó tính toán req.session.cart.quantity và gán vào res.locals.quantity để Header của trang web luôn hiện đúng số lượng sản phẩm.
 Giai đoạn Hành động (Nếu là POST /cart): Khi khách nhấn thêm hàng, cartController.add được gọi. Lúc này, nhờ Middleware trên đã chạy trước đó, nó chỉ việc gọi req.session.cart.add(product, quantity) một cách dễ dàng.
+
+### Phương thức PUT và PATCH
+
+- PUT update toàn bộ
+- PATCH update 1 phần
