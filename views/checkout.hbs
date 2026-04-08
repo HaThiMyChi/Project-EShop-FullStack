@@ -11,7 +11,8 @@
 <!-- Breadcrumb End -->
 
 <!-- Checkout Start -->
-<div class="checkout">
+<form action="/users/placeorders" method="POST">
+  <div class="checkout">
   <div class="container">
     <div class="row">
       <div class="col-md-7">
@@ -27,7 +28,7 @@
                     class="custom-control-input"
                     id="address-{{id}}"
                     name="addressId"
-                    value="PAYPAL" {{#if isDefault}} checked{{/if}}
+                    value="{{id}}" {{#if isDefault}} checked{{/if}}
                   />
                   <label class="custom-control-label" for="address-{{id}}">
                     <strong>{{firstName}} {{lastName}}</strong>
@@ -45,18 +46,18 @@
             </div>
             {{/each}}
             <div class="col-md-12">
-              <div class="custom-control custom-checkbox">
+              <div class="custom-control custom-radio">
                 <input
-                  type="checkbox"
+                  type="radio"
                   class="custom-control-input"
                   id="shipto"
+                  name="addressId"
+                  value="0"
                 />
                 <label class="custom-control-label" for="shipto">Ship to
                   different address</label>
               </div>
             </div>
-           
-             <div class="col-md-12">
           </div>
         </div>
 
@@ -68,28 +69,29 @@
               <input
                 class="form-control"
                 type="text"
+                name="firstName"
                 placeholder="First Name"
               />
             </div>
             <div class="col-md-6">
-              <label>Last Name"</label>
-              <input class="form-control" type="text" placeholder="Last Name" />
+              <label>Last Name</label>
+              <input class="form-control" type="text" name="lastName" placeholder="Last Name" />
             </div>
             <div class="col-md-6">
               <label>E-mail</label>
-              <input class="form-control" type="text" placeholder="E-mail" />
+              <input class="form-control" type="email" name="email" placeholder="E-mail" />
             </div>
             <div class="col-md-6">
               <label>Mobile No</label>
-              <input class="form-control" type="text" placeholder="Mobile No" />
+              <input class="form-control" type="text" name="mobile" placeholder="Mobile No" />
             </div>
             <div class="col-md-12">
               <label>Address</label>
-              <input class="form-control" type="text" placeholder="Address" />
+              <input class="form-control" type="text" name="address" placeholder="Address" />
             </div>
             <div class="col-md-6">
               <label>Country</label>
-              <select class="custom-select">
+              <select class="custom-select" name="country">
                 <option selected>United States</option>
                 <option>Afghanistan</option>
                 <option>Albania</option>
@@ -98,15 +100,15 @@
             </div>
             <div class="col-md-6">
               <label>City</label>
-              <input class="form-control" type="text" placeholder="City" />
+              <input class="form-control" type="text" name="city" placeholder="City" />
             </div>
             <div class="col-md-6">
               <label>State</label>
-              <input class="form-control" type="text" placeholder="State" />
+              <input class="form-control" type="text" name="state" placeholder="State" />
             </div>
             <div class="col-md-6">
               <label>ZIP Code</label>
-              <input class="form-control" type="text" placeholder="ZIP Code" />
+              <input class="form-control" type="text" name="zipCode" placeholder="ZIP Code" />
             </div>
           </div>
         </div>
@@ -181,4 +183,5 @@
     </div>
   </div>
 </div>
+</form>
 <!-- Checkout End -->

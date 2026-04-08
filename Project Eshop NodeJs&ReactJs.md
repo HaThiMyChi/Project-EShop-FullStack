@@ -302,3 +302,7 @@ Giai đoạn Hành động (Nếu là POST /cart): Khi khách nhấn thêm hàng
 
 - PUT update toàn bộ
 - PATCH update 1 phần
+
+## Hàm findByPk trong sequelize dùng để:
+
+👉 Tìm 1 record theo khóa chính (Primary Key – PK)
