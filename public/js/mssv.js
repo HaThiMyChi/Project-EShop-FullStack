@@ -85,3 +85,18 @@ async function clearCart() {
     }
   }
 }
+
+function placeorders(e) {
+  // Ngăn chặn sự kiện submit của form
+  e.preventDefault();
+
+  const addressId = document.querySelector("input[name=addressId]:checked");
+  if (!addressId || addressId.value == 0) {
+    // Nếu như kiểm tra thấy lỗi thì gọi e.target.reportValidity() để hiển thị lỗi
+    if (!e.target.checkValidity()) {
+      return e.target.reportValidity();
+    }
+  }
+  // neu như hợp lệ
+  e.target.submit();
+}
