@@ -308,3 +308,10 @@ Giai đoạn Hành động (Nếu là POST /cart): Khi khách nhấn thêm hàng
 ## Hàm findByPk trong sequelize dùng để:
 
 👉 Tìm 1 record theo khóa chính (Primary Key – PK)
+
+##### dotenv
+
+dotenv dùng để quản lý biến môi trường trong NodeJS, giúp tách config như database URL, API key, session secret ra khỏi source code, tăng bảo mật và dễ deploy.
+
+- setup luôn .env chuẩn cho project EShop của bạn
+- hoặc hướng dẫn config multi-env (dev / production)

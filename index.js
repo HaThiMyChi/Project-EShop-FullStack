@@ -1,5 +1,7 @@
 "use strict";
 
+require("dotenv").config();
+
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 5000;
@@ -17,7 +19,8 @@ const { createClient } = require("redis");
 // 1. Tạo Redis client
 const redisClient = createClient({
   // url: "rediss://red-d7d0hg77f7vs73enf4a0:WFXNkCMaYVFqo5O8kh4uyHb641nGHMq5@oregon-keyvalue.render.com:6379",
-  url: "redis://red-d7d0hg77f7vs73enf4a0:6379",
+  // url: "redis://red-d7d0hg77f7vs73enf4a0:6379",
+  url: process.env.REDIS_URL,
 });
 redisClient.connect().catch(console.error);
 
@@ -53,7 +56,7 @@ app.use(
     store: new RedisStore({
       client: redisClient,
     }), // Sử dụng Redis để lưu session
-    secret: "S3cret", // Chuỗi bí mật để ký session ID cookie
+    secret: process.env.SESSION_SECRET, // Chuỗi bí mật để ký session ID cookie
     resave: false, // Không lưu lại session nếu không có thay đổi
     saveUninitialized: false, // Không tạo session cho đến khi có dữ liệu được lưu (giúp tiết kiệm tài nguyên và tuân thủ luật bảo mật)
     cookie: {
