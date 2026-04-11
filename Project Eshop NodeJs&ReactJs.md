@@ -17,6 +17,8 @@ Phát triển ứng dụng web EShop
 * Web Server
 * Database Server
 
+- Redis => Session
+
 ## Lý thuyết về Sequelize
 
 Sequelize là ORM (Object-Relational Mapping) dùng để làm việc với database bằng JavaScript/TypeScript thay vì phải viết nhiều câu lệnh SQL thủ công.

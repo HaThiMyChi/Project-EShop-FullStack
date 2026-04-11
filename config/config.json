@@ -1,10 +1,16 @@
 {
   "development": {
-    "username": "postgres",
-    "password": "admin",
-    "database": "eshopDB",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+    "username": "ecommerce_db",
+    "password": "JSLpjxoTjE3pWWEp4146EHymJusakCBZ",
+    "database": "ecommerce_db_ml23",
+    "host": "dpg-d7cvsan41pts739njgo0-a.oregon-postgres.render.com",
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
   },
   "test": {
     "username": "root",
