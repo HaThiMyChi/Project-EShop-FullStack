@@ -11,6 +11,7 @@
   "license": "ISC",
   "description": "Hướng dẫn xây dựng website bán hàng trực tuyến đơn giản sử dụng NodeJS, Express, Postgres",
   "dependencies": {
+    "connect-redis": "^9.0.0",
     "express": "^5.2.1",
     "express-handlebars": "^8.0.1",
     "express-handlebars-paginate": "^1.0.3",
@@ -19,6 +20,7 @@
     "handlebars": "^4.7.8",
     "pg": "^8.20.0",
     "pg-hstore": "^2.3.4",
+    "redis": "^5.11.0",
     "sequelize": "^6.37.8"
   }
 }
