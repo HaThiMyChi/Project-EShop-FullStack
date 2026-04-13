@@ -1,10 +1,6 @@
 {
   "use_env_variable": "POSTGRESQL_URL",
   "development": {
-    "username": "ecommerce_db",
-    "password": "JSLpjxoTjE3pWWEp4146EHymJusakCBZ",
-    "database": "ecommerce_db_ml23",
-    "host": "dpg-d7cvsan41pts739njgo0-a.oregon-postgres.render.com",
     "dialect": "postgres",
     "dialectOptions": {
       "ssl": {
@@ -21,10 +17,6 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "ecommerce_db",
-    "password": "JSLpjxoTjE3pWWEp4146EHymJusakCBZ",
-    "database": "ecommerce_db_ml23",
-    "host": "dpg-d7cvsan41pts739njgo0-a.oregon-postgres.render.com",
     "dialect": "postgres",
     "dialectOptions": {
       "ssl": {
