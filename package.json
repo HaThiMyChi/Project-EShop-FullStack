@@ -11,7 +11,7 @@
   "license": "ISC",
   "description": "Hướng dẫn xây dựng website bán hàng trực tuyến đơn giản sử dụng NodeJS, Express, Postgres",
   "dependencies": {
-    "connect-redis": "^9.0.0",
+    "connect-redis": "^8.1.0",
     "dotenv": "^17.4.1",
     "express": "^5.2.1",
     "express-handlebars": "^8.0.1",

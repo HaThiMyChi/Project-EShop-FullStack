@@ -1,5 +1,5 @@
 {
-  "use_env_variable": "POSTGRES_URL",
+  "use_env_variable": "POSTGRESQL_URL",
   "development": {
     "username": "ecommerce_db",
     "password": "JSLpjxoTjE3pWWEp4146EHymJusakCBZ",
