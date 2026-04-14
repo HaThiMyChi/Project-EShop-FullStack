@@ -315,3 +315,13 @@ dotenv dùng để quản lý biến môi trường trong NodeJS, giúp tách co
 
 - setup luôn .env chuẩn cho project EShop của bạn
 - hoặc hướng dẫn config multi-env (dev / production)
+
+🔐 passport là gì?
+
+passport là một thư viện trong Node.js (Express) dùng để xử lý authentication (xác thực người dùng).
+
+👉 Nói đơn giản:
+
+Kiểm tra user là ai
+Xác nhận login đúng hay sai
+Quản lý đăng nhập (session / token)

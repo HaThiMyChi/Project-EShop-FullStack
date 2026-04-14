@@ -24,6 +24,9 @@ const redisClient = createClient({
 });
 redisClient.connect().catch(console.error);
 
+const passport = require("./controllers/passport");
+const flash = require("connect-flash");
+
 // cau hinh public static folder
 app.use(express.static(__dirname + "/public"));
 
@@ -67,17 +70,26 @@ app.use(
   }),
 );
 
+// cau hinh su dung passport
+app.use(passport.initialize());
+app.use(passport.session()); // lay thong tin user tu session de dua vao req.user
+
+// cau hinh su dung connect-flash de hien thi thong bao
+app.use(flash());
+
 // middleware khởi tạo giỏ hàng trong session nếu chưa tồn tại
 app.use((req, res, next) => {
   let Cart = require("./controllers/cart");
   req.session.cart = new Cart(req.session.cart ? req.session.cart : {});
   res.locals.quantity = req.session.cart.quantity; // chỗ này sẽ gửi ra cho giao diện
+  res.locals.isLoggedIn = req.isAuthenticated(); // Thêm biến isLoggedIn vào res.locals để kiểm tra trạng thái đăng nhập trong giao diện (trong passport có hàm isAuthenticated() để kiểm tra xem user đã đăng nhập hay chưa)
   next();
 });
 
 // routes
 app.use("/", require("./routes/indexRouter"));
 app.use("/products", require("./routes/productsRouter"));
+app.use("/users", require("./routes/authRouter"));
 app.use("/users", require("./routes/usersRouter"));
 
 app.use((req, res, next) => {
