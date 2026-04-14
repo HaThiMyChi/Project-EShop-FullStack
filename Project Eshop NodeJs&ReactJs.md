@@ -325,3 +325,16 @@ passport là một thư viện trong Node.js (Express) dùng để xử lý auth
 Kiểm tra user là ai
 Xác nhận login đúng hay sai
 Quản lý đăng nhập (session / token)
+
+#### Hiểu về bulkCreate
+
+User.bulkCreate(data, {
+updateOnDuplicate: ['password']
+});
+
+👉 Hành vi: Kết quả
+Trường hợp
+❌ Chưa tồn tại 👉 INSERT (tạo mới)
+✅ Đã tồn tại (trùng key) 👉 UPDATE các field trong updateOnDuplicate
+
+=> bulkCreate inserts new records and if a duplicate key (primary key or unique key) is found, it updates the specified fields using updateOnDuplicate.
