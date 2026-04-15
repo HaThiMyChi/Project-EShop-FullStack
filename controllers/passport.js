@@ -10,6 +10,9 @@ passport.serializeUser((user, done) => {
   done(null, user.id); // Lưu user ID vào session
 });
 
+// Nó không chạy ở request login đầu tiên để kiểm tra mật khẩu.
+// Nó chạy ở những request sau, khi browser đã có cookie session.
+
 // ham duoc goi boi passport.session de lay thong tin cua user tu csdl va dua vao req.user
 passport.deserializeUser(async (id, done) => {
   try {

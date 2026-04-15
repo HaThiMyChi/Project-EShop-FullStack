@@ -4,7 +4,26 @@ const express = require("express");
 const router = express.Router();
 const controller = require("../controllers/authController");
 
+const { body, getErrorMessage } = require("../controllers/validator");
+
 router.get("/login", controller.show);
-router.post("/login", controller.login);
+router.post(
+  "/login",
+  body("email")
+    .trim()
+    .notEmpty()
+    .withMessage("Email is required")
+    .isEmail()
+    .withMessage("Invalid email address!"),
+  body("password").trim().notEmpty().withMessage("Password is required!"),
+  (req, res, next) => {
+    let message = getErrorMessage(req);
+    if (message) {
+      return res.render("login", { loginMessage: message });
+    }
+    next(); // neu dung het goi next() thi se goi qua controller.login de xu ly tiep theo
+  },
+  controller.login,
+);
 
 module.exports = router;

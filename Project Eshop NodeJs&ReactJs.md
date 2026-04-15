@@ -338,3 +338,56 @@ Trường hợp
 ✅ Đã tồn tại (trùng key) 👉 UPDATE các field trong updateOnDuplicate
 
 => bulkCreate inserts new records and if a duplicate key (primary key or unique key) is found, it updates the specified fields using updateOnDuplicate.
+
+## Cách hiểu hoạt động chức năng login
+
+uồng chạy của request /login
+Middleware 1
+express.urlencoded(...)
+
+Nhiệm vụ:
+
+đọc dữ liệu form POST
+gắn vào req.body
+
+Sau middleware này:
+
+req.body.login
+req.body.password
+req.body.remember
+
+đã có dữ liệu.
+
+## Sơ đồ dễ nhớ chức năng login
+
+[Form login]
+│
+│ POST /users/login
+▼
+router.post("/login", controller.login)
+▼
+controller.login(req, res, next)
+▼
+passport.authenticate("local-login", callback)(req, res, next)
+▼
+Passport tìm strategy tên "local-login"
+▼
+passport.use("local-login", new LocalStrategy(...))
+▼
+LocalStrategy kiểm tra:
+
+- tìm user
+- so sánh password bằng bcrypt
+  ▼
+  done(null, false) hoặc done(null, user)
+  ▼
+  callback trong controller nhận kết quả
+  ▼
+  nếu fail -> redirect /users/login
+  nếu success -> req.logIn(user, ...)
+  ▼
+  passport.serializeUser((user, done) => done(null, user.id))
+  ▼
+  session lưu user.id
+  ▼
+  res.redirect("/users/my-account")

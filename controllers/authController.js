@@ -8,6 +8,7 @@ controller.show = (req, res) => {
 
 controller.login = (req, res, next) => {
   let keepSignedIn = req.body.keepSignedIn;
+  // Passport sẽ tìm strategy đã đăng ký tên:local-login
   passport.authenticate("local-login", (error, user) => {
     if (error) {
       // chuyen ra ben ngoai cho no xu ly
@@ -20,6 +21,7 @@ controller.login = (req, res, next) => {
     }
 
     // da dang nhap thanh cong, ham nay se tra ve middleware de cho no thuc hien tiep
+    // Hãy đánh dấu user này là đã đăng nhập bằng session.
     req.logIn(user, (error) => {
       if (error) {
         return next(error);
@@ -27,7 +29,7 @@ controller.login = (req, res, next) => {
       req.session.cookie.maxAge = keepSignedIn ? 24 * 60 * 60 * 1000 : null; // 1 ngay
       return res.redirect("/users/my-account");
     });
-  })(req, res, next);
+  })(req, res, next); // đang gọi middleware đó ngay lập tức.
 };
 
 module.exports = controller;

@@ -33,15 +33,20 @@
                   type="text"
                   placeholder="First Name"
                   name="email"
+                  required
+                  pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
                 />
               </div>
               <div class="col-md-6">
                 <label>Password</label>
                 <input
                   class="form-control"
-                  type="password;"
-                  placeholder="Last Name"
+                  type="password"
+                  placeholder="Password"
                   name="password"
+                  required
+                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                  title="Password must have at least 8 characters, including uppercase, lowercase, and numbers"
                 />
               </div>
               <div class="col-md-12">
@@ -62,7 +67,7 @@
               {{#if loginMessage}}
                 <div class="col-md-12">
                   <div class="p-3 mt-3 alert alert-warning">
-                    {{loginMessage}}
+                    {{{loginMessage}}}
                   </div>
                 </div>
               {{/if}}
