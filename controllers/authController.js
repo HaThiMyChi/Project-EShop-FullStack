@@ -32,4 +32,14 @@ controller.login = (req, res, next) => {
   })(req, res, next); // đang gọi middleware đó ngay lập tức.
 };
 
+controller.logout = (req, res, next) => {
+  req.logout((error) => {
+    if (error) {
+      return next(error);
+    }
+    // neu khong co loi thi se chuyen huong ve trang chu
+    res.redirect("/");
+  });
+};
+
 module.exports = controller;
