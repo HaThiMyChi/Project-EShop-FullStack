@@ -419,4 +419,9 @@ Dữ liệu từ user ❌ không dùng {{{ }}
 - req.path: /products
 - req.query: { page: 2, sort: 'price' }
 
+## onchange và onkeyup
+
+- onchange: khi value thay đổi xong + mất focus
+- onkeyup: mỗi lần thả phím (gõ xong 1 ký tự)
+
 ### Password login Demo@123

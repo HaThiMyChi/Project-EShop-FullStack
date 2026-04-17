@@ -100,3 +100,17 @@ function placeorders(e) {
   // neu như hợp lệ
   e.target.submit();
 }
+
+function checkPasswordConfirm(formId) {
+  let password = document.querySelector(`#${formId} [name=password]`);
+  let confirmPassword = document.querySelector(
+    `#${formId} [name=confirmPassword]`,
+  );
+
+  if (password.value != confirmPassword.value) {
+    confirmPassword.setCustomValidity("Passwords not match!"); // dat message loi cho input
+    confirmPassword.reportValidity(); // hien thi loi ngay lap tuc
+  } else {
+    confirmPassword.setCustomValidity("");
+  }
+}
