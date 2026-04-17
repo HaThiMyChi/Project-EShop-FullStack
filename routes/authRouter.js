@@ -28,4 +28,6 @@ router.post(
 
 router.get("/logout", controller.logout);
 
+router.post("/register", controller.register);
+
 module.exports = router;

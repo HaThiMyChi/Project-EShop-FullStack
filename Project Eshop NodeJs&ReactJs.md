@@ -406,4 +406,17 @@ gọi serializeUser() để lưu user.id vào session
 ở request sau, passport.session() sẽ gọi deserializeUser()
 gắn user vào:
 
+### Khác nhau {{ }}, {{{ }}} trong html
+
+Trường hợp Nên dùng
+Text bình thường {{ }}
+Có HTML {{{ }}}
+Dữ liệu từ user ❌ không dùng {{{ }}
+
+## http://localhost:5000/products?page=2&sort=price
+
+- req.originalUrl: /products?page=2&sort=price
+- req.path: /products
+- req.query: { page: 2, sort: 'price' }
+
 ### Password login Demo@123

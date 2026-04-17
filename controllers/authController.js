@@ -9,6 +9,7 @@ controller.show = (req, res) => {
   res.render("login", {
     loginMessage: req.flash("loginMessage"),
     reqUrl: req.query.reqUrl,
+    registerMessage: req.flash("registerMessage"),
   });
 };
 
@@ -64,6 +65,28 @@ controller.isLoggedIn = (req, res, next) => {
     // chua dang nhap thi se chuyen huong ve trang login, va truyen them reqUrl de biet duoc nguoi dung dang muon truy cap vao trang nao
     res.redirect(`/users/login?reqUrl=${req.originalUrl}`);
   }
+};
+
+controller.register = (req, res, next) => {
+  let reqUrl = req.body.reqUrl ? req.body.reqUrl : "/users/my-account"; // nếu không có reqUrl thì mặc định sẽ chuyển hướng về trang my-account sau khi đăng nhập thành công
+  let cart = req.session.cart; // luu lai cart truoc khi dang ky
+  passport.authenticate("local-register", (error, user) => {
+    if (error) {
+      return next(error);
+    }
+    if (!user) {
+      // neu nhu ma k co user, chung ta se redirect de hien thi lai form dang ky
+      return res.redirect(`/users/login?reqUrl=${reqUrl}`);
+    }
+    // neu nhu co user
+    req.logIn(user, (error) => {
+      if (error) {
+        return next(error);
+      }
+      req.session.cart = cart;
+      res.redirect(reqUrl);
+    });
+  })(req, res, next);
 };
 
 module.exports = controller;

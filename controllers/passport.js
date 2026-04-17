@@ -4,6 +4,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt"); // dung de ma hoa mat khau
 const models = require("../models");
+const { where } = require("sequelize");
 
 // Ham nay duoc goi khi xac thuc thanh cong va luu thong tin user vao session
 passport.serializeUser((user, done) => {
@@ -69,6 +70,59 @@ passport.use(
         return done(null, req.user);
       } catch (error) {
         return done(error);
+      }
+    },
+  ),
+);
+
+// ham dang ky tai khoan
+passport.use(
+  "local-register",
+  new LocalStrategy(
+    {
+      usernameField: "email",
+      passwordField: "password",
+      passReqToCallback: true, // cho phép truyền req vào callback de kiem tra user da dang nhap chua
+    },
+    async (req, email, password, done) => {
+      if (email) {
+        email = email.toLowerCase(); // chuyen dia chi email sang ky tu thuong
+      }
+
+      if (req.user) {
+        // neu user da dang nhap roi thi khong cho dang ky nua
+        return done(null, req.user);
+      }
+
+      try {
+        let user = await models.User.findOne({ where: { email } });
+        if (user) {
+          // neu email da ton ti
+          return done(
+            null,
+            false,
+            req.flash("registerMessage", "Email is already taken!"),
+          );
+        }
+
+        user = await models.User.create({
+          email: email,
+          password: bcrypt.hashSync(password, bcrypt.genSaltSync(8)), // ma hoa mat khau truoc khi luu vao database
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          mobile: req.body.mobile,
+        });
+        // thong bao dag ky thanh cong
+        done(
+          null,
+          false,
+          req.flash(
+            "registerMessage",
+            "You have registered successfully. Please login!",
+          ),
+        );
+      } catch (error) {
+        done(error);
       }
     },
   ),
