@@ -391,3 +391,19 @@ LocalStrategy kiểm tra:
   session lưu user.id
   ▼
   res.redirect("/users/my-account")
+
+  #### next() nghĩa là:
+
+Cho request đi tiếp sang middleware / route handler tiếp theo
+
+#### Sau khi login thành công:
+
+req.logIn(user, ...)
+
+Passport sẽ:
+
+gọi serializeUser() để lưu user.id vào session
+ở request sau, passport.session() sẽ gọi deserializeUser()
+gắn user vào:
+
+### Password login Demo@123

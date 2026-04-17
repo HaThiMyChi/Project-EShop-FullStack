@@ -45,8 +45,6 @@
                   placeholder="Password"
                   name="password"
                   required
-                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                  title="Password must have at least 8 characters, including uppercase, lowercase, and numbers"
                 />
               </div>
               <div class="col-md-12">
@@ -71,6 +69,7 @@
                   </div>
                 </div>
               {{/if}}
+              <input type="hidden" name="reqUrl" value="{{reqUrl}}" />
             </div>
           </div>
         </form>

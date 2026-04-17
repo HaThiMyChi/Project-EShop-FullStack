@@ -5,6 +5,10 @@ const router = express.Router();
 const controller = require("../controllers/usersController");
 const { body, validationResult } = require("express-validator");
 
+const authController = require("../controllers/authController");
+// truoc khi chạy vào những router bên dưới thì phải kiemr tra người dùng có đăng nhập hay không
+router.use(authController.isLoggedIn); // kiem tra xem da dang nhap chua, neu chua thi se chuyen huong ve trang login
+
 router.get("/checkout", controller.checkout);
 router.post(
   "/placeorders",
