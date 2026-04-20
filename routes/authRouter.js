@@ -64,4 +64,8 @@ router.post(
   controller.register,
 );
 
+// Forgot Password
+router.get("/forgot", controller.showForgotPassword);
+router.post("/forgot", controller.forgotPassword);
+
 module.exports = router;

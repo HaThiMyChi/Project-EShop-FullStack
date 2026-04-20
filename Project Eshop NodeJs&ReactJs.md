@@ -424,4 +424,17 @@ Dữ liệu từ user ❌ không dùng {{{ }}
 - onchange: khi value thay đổi xong + mất focus
 - onkeyup: mỗi lần thả phím (gõ xong 1 ký tự)
 
+## Chức năng “Forgot Password”
+
+Với Node.js + Express + node-mailjet, chức năng quên mật khẩu thường làm theo luồng này:
+
+- User nhập email ở form “Forgot Password”
+- Server kiểm tra email có tồn tại không
+- Tạo token reset password
+- Lưu token + thời gian hết hạn vào database
+- Gửi email chứa link reset
+- User bấm link đó để vào trang reset password
+- User nhập mật khẩu mới
+- Server kiểm tra token còn hợp lệ không rồi cập nhật password
+
 ### Password login Demo@123
