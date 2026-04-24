@@ -437,4 +437,69 @@ Với Node.js + Express + node-mailjet, chức năng quên mật khẩu thườn
 - User nhập mật khẩu mới
 - Server kiểm tra token còn hợp lệ không rồi cập nhật password
 
+## jsonwebtoken có 2 hàm chính
+
+- sign() -> tạo token
+  Dùng để tạo ra JWT (token) từ dữ liệu
+  👉 Hiểu đơn giản:
+  Đóng gói thông tin + ký lại bằng secret
+
+- verify() -> kiểm tra token
+  Dùng để: Kiểm tra token có hợp lệ không
+  Giải mã token ra dữ liệu bên trong
+  👉 Hiểu đơn giản:
+  Mở gói + kiểm tra có bị sửa không + còn hạn không
+
+### Hiểu về jsonwebtoken
+
+jsonwebtoken là thư viện trong Node.js dùng để tạo và kiểm tra JWT
+
+JWT thường dùng cho:
+
+- Đăng nhập/xác thực người dùng (Authentication)
+- Phân quyền người dùng (Authorization)
+- Forgot Password (gửi link reset password)
+- Email verification (xác minh email)
+- API bảo mật
+
+JWT là một chuỗi token dạng như này:
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+Token này chứa thông tin như:
+-user id, email, role, thời gian hết hạn
+
+secretKey: là chìa khóa bí mật dể mã hóa token
+expiresIn: thời gian sống của token
+
+Lưu ý: Nếu token sai hoặc hết hạn nó sẽ báo lỗi: jsonwebTokenError, TokenExpiredError
+
+### Access Token và Refresh Token khác nhau như thế nào?
+
+- Access Token dùng để truy cập API, thời gian sống ngắn
+- Refresh Token dùng để tạo Access Token mới khi Access Token hết hạn, thời gian sống dài hơn
+
+-> Khi Access Token hết hạn, frontend gửi Refresh Token lên server -> server cấp Access Token mới
+
+### JWT lưu ở đâu?
+
+Thường luu ở localstorage, sessionStorage, HttpOnly Cookie (an toàn hơn)
+Production thường ưu tiên Cookie vì bảo mật hơn
+
+### Vì sao cần expiresIn?
+
+Để token có thời gian hết hạn, tránh bị sử dụng mãi mãi nếu bị lộ
+ví dụ: expiresIn: "15m"
+Nếu hacker lấy được token, họ chỉ dùng được 15 phút -> tăng bảo mật
+
+### JWT có bảo mật tuyệt đối không?
+
+Không, JWT chỉ an toàn khi:
+secret key mạnh, HTTPS, expiresIn hợp lý, lưu token đúng cách, chống XSS/CSRF
+
+### JWT dùng cho forgot password thế nào?
+
+Server tạo token chứa email hoặc userId và gửi link reset password qua email
+Người dùng bấm link -> server verify token -> cho phép đổi mật khẩu
+
 ### Password login Demo@123

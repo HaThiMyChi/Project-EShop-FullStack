@@ -99,10 +99,28 @@ controller.forgotPassword = async (req, res) => {
   let user = await models.User.findOne({ where: { email } });
   if (user) {
     // tao link
-    // gui email
-    // Thong bao thanh cong
+    const { sign } = require("./jwt");
+    const host = req.header("host");
+    const resetLink = `${req.protocol}://${host}/reset?token=${sign(email)}&email=${email}`;
 
-    return res.render("forgot-password", { done: true });
+    // gui email
+    const { sendForgotPassword } = require("./mail");
+    sendForgotPassword(user, host, resetLink)
+      .then((result) => {
+        console.log("email has been sent");
+        // Thong bao thanh cong
+        return res.render("forgot-password", { done: true });
+      })
+      .catch((err) => {
+        console.log(err.statusCode);
+        return res.render("forgot-password", {
+          message:
+            "An error has occured when sending to your email. Please check your email address!",
+        });
+      });
+
+    // Thong bao thanh cong
+    // return res.render("forgot-password", { done: true });
   } else {
     // nguoc lai, thong bao email khong ton tai
     return res.render("forgot-password", { message: "Email does not exist!" });
