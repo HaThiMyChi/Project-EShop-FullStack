@@ -101,7 +101,7 @@ controller.forgotPassword = async (req, res) => {
     // tao link
     const { sign } = require("./jwt");
     const host = req.header("host");
-    const resetLink = `${req.protocol}://${host}/reset?token=${sign(email)}&email=${email}`;
+    const resetLink = `${req.protocol}://${host}/users/reset?token=${sign(email)}&email=${email}`;
 
     // gui email
     const { sendForgotPassword } = require("./mail");
@@ -126,4 +126,29 @@ controller.forgotPassword = async (req, res) => {
     return res.render("forgot-password", { message: "Email does not exist!" });
   }
 };
+
+controller.showResetPassword = (req, res) => {
+  let email = req.query.email;
+  let token = req.query.token;
+  let { verify } = require("./jwt");
+  // Neu nhu token khong co, hoac khong hop le
+  if (!token || !verify(token)) {
+    return res.render("reset-password", { expired: true });
+  } else {
+    // token hop le
+    return res.render("reset-password", { email, token });
+  }
+};
+
+controller.resetPassword = async (req, res) => {
+  let email = req.body.email;
+  let token = req.body.token;
+  // ma hoa mat khau
+  let bcrypt = require("bcrypt");
+  let password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8));
+
+  await models.User.update({ password }, { where: { email } });
+  res.render("reset-password", { done: true });
+};
+
 module.exports = controller;

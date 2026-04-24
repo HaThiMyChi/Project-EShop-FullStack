@@ -66,6 +66,49 @@ router.post(
 
 // Forgot Password
 router.get("/forgot", controller.showForgotPassword);
-router.post("/forgot", controller.forgotPassword);
+router.post(
+  "/forgot",
+  body("email")
+    .trim()
+    .notEmpty()
+    .withMessage("Email is required!")
+    .isEmail()
+    .withMessage("Invalid email address!"),
+  (req, res, next) => {
+    let message = getErrorMessage(req);
+    if (message) {
+      return res.render("forgot-password", { message });
+    }
+    next();
+  },
+  controller.forgotPassword,
+);
+
+router.get("/reset", controller.showResetPassword);
+router.post(
+  "/rest",
+  body("password")
+    .trim()
+    .notEmpty()
+    .withMessage("Password is required!")
+    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/)
+    .withMessage(
+      "Password must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters",
+    ),
+  body("confirmPassword").custom((confirmPassword, { req }) => {
+    if (confirmPassword != req.body.password) {
+      throw new Error("Confirm password does not match password!");
+    }
+    return true; // neu dung roi thi thoi
+  }),
+  (req, res, next) => {
+    let message = getErrorMessage(req);
+    if (message) {
+      return res.render("reset-password", { message });
+    }
+    next(); // neu dung het goi next() thi se goi qua controller.login de xu ly tiep theo
+  },
+  controller.resetPassword,
+);
 
 module.exports = router;
